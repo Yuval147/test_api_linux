@@ -1,24 +1,36 @@
 name: api_test
-on: [push, pull_request]
+
+on:
+  push:
+  pull_request:
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
 
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest
-        pip install requests
-        pip install playwright
+      - name: Set up virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
 
-    - name: Run API Tests
-      run: pytest -v -s autolinux/apis/test_api.py
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  
+
+      - name: Install Playwright Dependencies
+        run: npx playwright install
+
+      - name: Run API Tests
+        run: |
+          pytest -v -s autolinux/apis/test_loop.py
+        working-directory: ${{ github.workspace }}
