@@ -32,5 +32,4 @@ jobs:
 
       - name: Run API Tests
         run: |
-          pytest -v -s autolinux/apis/test_loop.py
-        working-directory: ${{ github.workspace }}
+          pytest -v -s autolinux/apis/test_api.py
