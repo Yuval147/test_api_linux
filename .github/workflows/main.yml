@@ -32,9 +32,9 @@ jobs:
 
       - name: List files in the directory
         run: find . -type f
-        working-directory: ./apis
+        working-directory: ./api
 
       - name: Run Tests in APIs
         run: |
           find . -name "test_*.py" -exec pytest -v -s {} \;
-        working-directory: ./apis
+        working-directory: ./api
