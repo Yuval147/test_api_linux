@@ -21,15 +21,20 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install --upgrade pip
 
       - name: Install Dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install pytest
           pip install requests
           pip install playwright
 
-      - name: Run API Tests
+
+      - name: List files in the directory
+        run: find . -type f
+        working-directory: ./apis
+
+      - name: Run Tests in APIs
         run: |
-          source venv/bin/activate
-          pytest -v -s autolinux/apis/test_api.py
+          find . -name "test_*.py" -exec pytest -v -s {} \;
+        working-directory: ./apis
